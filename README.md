@@ -13,8 +13,7 @@ Finance and operations leadership required a granular breakdown of wholesale rev
 Using **PostgreSQL**, transaction records from the `sales` table were filtered, transformed, and aggregated using the following techniques:
 * **B2B Scope Filtering:** Isolated `Wholesale` client transactions from retail point-of-sale logs using `WHERE client_type = 'Wholesale'`.
 * **Date-Part Transformation:** Used `EXTRACT('month' FROM date)` inside a `CASE WHEN` statement (or `TO_CHAR(date, 'Month')`) to standardize transaction timestamps into summer monthly reporting cohorts (`June`, `July`, `August`).
-* **Net Revenue & Fee Calculation:** Computed true net revenue after deducting payment processor fees:
-  $$\text{Net Revenue} = \sum(\text{total} \times (1 - \text{payment\_fee}))$$
+* **Net Revenue & Fee Calculation:** Computed true net revenue after deducting payment processor fees:(`SUM(total - payment_fee)`).
 * **Multi-Dimensional Grouping:** Grouped and ordered results by `product_line`, `warehouse`, and `month` (`ORDER BY product_line, month, net_revenue DESC`) to surface top-performing segments.
 
 ## 📂 Repository Structure
